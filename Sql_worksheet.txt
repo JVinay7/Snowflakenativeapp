@@ -217,3 +217,16 @@ snow connection add
 snow connection list
 snow connection set-default connection_name
 snow app run --connection connection_name
+
+
+---------------------------------
+**git connections**
+
+git init
+git remote add origin https://github.com/yourusername/yourrepo.git
+git branch
+git checkout branch-name
+git status
+git add .
+git commit -m "Descriptive commit message"
+git push origin branch-name
