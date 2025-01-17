@@ -1,0 +1,33 @@
+# This is a project definition file, a required component if you intend to use Snowflake CLI in a project directory such as this template.
+
+definition_version: 2
+entities:
+  app_pkg:
+    type: application package
+    identifier: app_pkg
+    artifacts:
+      - src: app/*
+        dest: ./
+      - src: streamlit/*
+        dest: streamlit/
+      # - streamlit/module_ui/*
+      # - streamlit/ui.py
+      # - streamlit/environment.yml
+      # - python/config.py
+    
+
+    # meta:
+    #     post_deploy:
+    #      - sql_script: scripts/provider_setup.sql
+    
+    manifest: app/manifest.yml
+    
+  app:
+    type: application
+    from:
+      target: app_pkg
+    identifier: app
+
+# env:
+#   suffix: <% fn.concat_ids('_', fn.sanitize_id(fn.get_username('unknown_user')) | lower) %>
+

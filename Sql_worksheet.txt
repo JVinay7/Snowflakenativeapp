@@ -1,0 +1,219 @@
+create or replace database SUPP_ANALYTICS_DB;
+ 
+use database SUPP_ANALYTICS_DB;
+ 
+create or replace schema SUPP_ANALYTICS_DB.data;
+ 
+use schema data;
+----------------------------------------------------------------------------------------
+--**DIM_TAXONOMY_CODE**
+ 
+create or replace table DIM_TAXONOMY_CODE(LEVEL_1 VARCHAR(16777216),
+LEVEL_2 VARCHAR(16777216),
+LEVEL_3 VARCHAR(16777216),
+LEVEL_4 VARCHAR(16777216));
+ 
+truncate table DIM_TAXONOMY_CODE;
+ 
+select * from data.DIM_TAXONOMY_CODE;
+ 
+create or replace stage SUPP_ANALYTICS_STAGE;
+ 
+CREATE FILE FORMAT DIM_TAXONOMY_CODE_format
+  TYPE = 'CSV'
+  FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+  SKIP_HEADER = 1;
+ 
+COPY INTO DIM_TAXONOMY_CODE
+FROM @SUPP_ANALYTICS_STAGE/DIM_TAXONOMY_CODE.csv
+FILE_FORMAT = DIM_TAXONOMY_CODE_format
+ON_ERROR = CONTINUE;
+ 
+select count(*) from DIM_TAXONOMY_CODE;
+ 
+---------------------------------------------------------------------------------------------
+ 
+--**FACT_SUPP_ANALYTICS_SPEND_TRANSACTION**
+ 
+create table FACT_SUPP_ANALYTICS_SPEND_TRANSACTION(
+BUSINESS_SEGMENT VARCHAR(16777216),
+CBRE_L4 VARCHAR(16777216),
+CLIENT VARCHAR(16777216),
+COMPETITOR_STATUS VARCHAR(16777216),
+COUNTRY VARCHAR(16777216),
+GLOBAL_REGION VARCHAR(16777216),
+GL_ACCT_DESCR VARCHAR(16777216),
+INV_LINE_AMT_USD FLOAT,
+INV_LINE_DESCR VARCHAR(16777216),
+INV_LINE_ITEM_CATEGORY VARCHAR(16777216),
+LINE_OF_BUSINESS VARCHAR(16777216),
+PJM_V_FM VARCHAR(16777216),
+PO_LINE_ITEM_CATEGORY VARCHAR(16777216),
+PO_LINE_ITEM_DESCR VARCHAR(16777216),
+PO_LONG_DESCR VARCHAR(16777216),
+PO_SHORT_DESCR VARCHAR(16777216),
+SECTOR_VERTICAL VARCHAR(16777216),
+SOURCE_SYSTEM VARCHAR(16777216),
+SPEND_CATEGORY VARCHAR(16777216),
+SPEND_MONTH VARCHAR(16777216),
+SPEND_YEAR NUMBER(38,0),
+SUPPLIER_CLASSIFICATION VARCHAR(16777216),
+SUPPLIER_DIV_CERT_TYPE VARCHAR(16777216),
+SUPPLIER_DIV_SUBTYPE VARCHAR(16777216),
+SUPPLIER_DIV_TYPE VARCHAR(16777216),
+SUPPLIER_ETHNICITY VARCHAR(16777216),
+SUPPLIER_NAME VARCHAR(16777216),
+SUPPLIER_NORM_NAME VARCHAR(16777216),
+SUPPLIER_SUST_ENV_SCORE VARCHAR(16777216),
+SUPPLIER_SUST_ETH_SCORE VARCHAR(16777216),
+SUPPLIER_SUST_LAB_HUMAN_RIGHTS_SCORE VARCHAR(16777216),
+SUPPLIER_SUST_OVERALL_SCORE VARCHAR(16777216),
+SUPPLIER_SUST_RATING VARCHAR(16777216),
+TRANSACTION_ID VARCHAR(16777216)
+);
+ 
+create or replace stage FACT_SUPP_ANALYTICS_SPEND_TRANSACTION_stage;
+ 
+ 
+COPY INTO FACT_SUPP_ANALYTICS_SPEND_TRANSACTION
+FROM @SUPP_ANALYTICS_STAGE/FACT_SUPP_ANALYTICS_SPEND_TRANSACTION.csv
+FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"')
+ON_ERROR = CONTINUE;
+ 
+select count(*) from FACT_SUPP_ANALYTICS_SPEND_TRANSACTION;
+ 
+truncate table FACT_SUPP_ANALYTICS_SPEND_TRANSACTION;
+ 
+---------------------------------------------------------------------------------------------
+--**faqs_data**
+ 
+CREATE OR REPLACE TABLE supp_analytics_db.data.faqs_data (
+    question STRING NOT NULL,      -- The question, cannot be NULL
+    answer STRING NOT NULL,        -- The answer, cannot be NULL
+    create_date TIMESTAMP_NTZ      -- The creation date with no time zone
+);
+ 
+insert into supp_analytics_db.data.faqs_data(
+    question, answer, create_date
+) values
+(
+'Why am I seeing placeholder data in Customer AI?',
+'
+This version of Customer AI is a trial, designed to showcase the application''s core features and functionality using sample or placeholder data. This allows users to explore the platform''s capabilities without needing to configure their own data.
+',
+current_timestamp()
+),
+(
+'How can I use my own data with Customer AI?',
+'
+To unlock the full potential of Customer AI and tailor the application to your specific business needs, you can integrate your own data. For assistance with data integration and customization, please reach out to our support team at appsupport@anblicks.com. We''ll guide you through the process of transitioning from the trial version to a fully customized experience.
+',
+current_timestamp()
+),
+(
+'What does RFM mean in Customer AI?',
+'
+**RFM** stands for Recency, Frequency, and Monetary Value:
+ 
+- **Recency**: How recently a customer made a purchase.
+- **Frequency**: How often they buy.
+- **Monetary** Value: How much they spend.
+ 
+This helps understand your customers’ buying habits so you can better target your marketing efforts.
+',
+current_timestamp()
+),
+ 
+(
+'How does Customer AI group customers into Gold, Silver, and Bronze?',
+'
+Customers are grouped by how much they spend over time:
+ 
+- **Gold** : Customers who are among the top 30% in spending.
+- **Silver** : Customers who are in the middle 60% of spenders.
+- **Bronze** : Customers who are in the bottom 10% of spenders.
+ 
+',
+current_timestamp()
+),
+(
+'How are customers classified as New, Active, Lost, or Lapsed?',
+'
+- **New Customer**: Recently started buying from you, and not frequently.
+- **Active Customer**: Regular buyers who make purchases often.
+- **Lost Customer**: Haven’t made a purchase in a long time.
+- **Lapsed Customer**: Customers who don’t fit into the other categories but are no longer active.
+',
+current_timestamp()
+),
+(
+'What is Customer Lifetime Value (CLV), and how is it used?',
+'
+**Customer Lifetime Value (CLV)** is an estimate of how much a customer is likely to spend over their entire relationship with your business. Based on this, customers are grouped into:
+ 
+- **High CLV**: Expected to spend a lot.
+- **Medium CLV**: Expected to spend a moderate amount.
+- **Low CLV**: Expected to spend less.
+ 
+ 
+This helps you focus on your most valuable customers.
+',
+current_timestamp()
+),
+(
+'How does Customer AI predict future demand?',
+'
+Customer AI uses past sales data to predict how much of a product you’ll need in the future. This helps you plan inventory and avoid stock shortages.
+',
+current_timestamp()
+),
+(
+'What is NPS, and how does it measure customer loyalty?',
+'
+**Net Promoter Score (NPS)** measures how likely your customers are to recommend your business to others. Customers are asked:
+*How likely are you to recommend us to a friend or colleague?*
+ 
+- **Promoters** (Score 9-10): Very happy customers who will likely recommend your business.
+- **Passives** (Score 7-8): Satisfied but not overly enthusiastic customers.
+- **Detractors** (Score 0-6): Unhappy customers who may speak negatively about your business.
+ 
+ 
+NPS is calculated by subtracting the percentage of Detractors from the percentage of Promoters. The higher the score, the better your customer loyalty.
+',
+current_timestamp()
+),
+(
+'How does Customer AI suggest product recommendations?',
+'
+Customer AI looks at products that are often bought together and suggests these combinations to customers. This helps create personalized recommendations that increase sales.
+',
+current_timestamp()
+),
+(
+'How does Customer AI segment customers?',
+'
+Customer AI divides customers into four segments based on their buying habits and engagement:
+ 
+- **Uninfluenced and At-Risk**: These customers don’t buy often or show much interest.
+- **Leading Edgers**: These are highly engaged customers who like to try new products first.
+- **Genuine and Loyal**: These customers buy regularly and are very loyal.
+- **Consciously Engaged**: These customers are actively engaged and care about the values behind their purchases, like social or environmental causes.
+ 
+ 
+This segmentation helps businesses tailor their marketing and service to different customer groups.
+ 
+',
+current_timestamp()
+);
+ 
+ 
+select * from faqs_data;
+
+
+---------------------------------------------------------------------------------------
+
+**connections**
+snow connection add
+snow connection list
+snow connection set-default connection_name
+snow app run --connection connection_name
