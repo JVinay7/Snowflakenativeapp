@@ -97,7 +97,7 @@ with page5:
         st.subheader("Sustainable Spend Analysis",
         help="Select a metric (e.g., Country, Business Segment) to analyze sustainable spend distribution. The dynamic table provides insights based on the chosen metric."
         )
-        selected_metric = st.selectbox("", metric_options)
+        selected_metric = st.selectbox("", metric_options,format_func=lambda x: x.replace("_", " "))
 
         # Call the function to plot the dynamic bar graph
         if selected_metric:

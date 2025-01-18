@@ -100,7 +100,7 @@ with page3:
         st.subheader("S&P Compliance %",
         help="This section allows you to visualize the percentage of compliance with S&P categories across different metrics. You can select a metric such as Country, Line of Business, or Region to explore how S&P compliance is distributed within that category. Understanding compliance trends is essential for ensuring that spend management aligns with S&P objectives and policies."
         )
-        selected_metric = st.selectbox("", metric_options)
+        selected_metric = st.selectbox("", metric_options,format_func=lambda x: x.replace("_", " "))
         if selected_metric:
             plot_dynamic_SP_bar_graph(selected_metric,st.session_state.filters)
 Footer()

@@ -212,7 +212,7 @@ with page1:
         # st.markdown("#### Spend Amount")
         st.subheader("Spend Amount across different metrics ",
         help="This section allows you to view spending across different metrics, such as supplier names, categories, or regions. The top 10 results are displayed as a bar chart, showing the total spending in billions of dollars for the selected metric. You can adjust filters to refine the results.")
-        selected_metric = st.selectbox("", metric_options)
+        selected_metric = st.selectbox("", metric_options,format_func=lambda x: x.replace("_", " "))
         
 
         # Call the function to plot the dynamic bar graph
