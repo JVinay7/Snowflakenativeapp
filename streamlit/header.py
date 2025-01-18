@@ -1,9 +1,9 @@
 import streamlit as st
 from skimage import io
 import plotly.express as px
-from util import *
-# from utils import run_engine
-
+import os
+import base64
+import plotly.graph_objects as go
 
 def triggerEngine():
     with st.spinner("Executing Engine..."):
@@ -16,7 +16,62 @@ def Header(
         
         
 ):
+    def image_png(file,img_width=500, img_height=80):
+        fully_qualified = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+        with open(fully_qualified, "rb") as f:
+            png_data = f.read()
     
+        png = "data:image/png;base64," + base64.b64encode(png_data).decode("utf-8")
+    
+        fig = go.Figure()
+    
+        scale_factor=1
+        fig.add_trace(
+            go.Scatter(
+                x=[0, img_width * scale_factor],
+                y=[0, img_height * scale_factor],
+                mode="markers",
+                marker_opacity=0
+            )
+        )
+    
+        # Configure axes
+        fig.update_xaxes(
+            visible=False,
+            range=[0, img_width * scale_factor],
+            fixedrange = True
+        )
+    
+        fig.update_yaxes(
+            visible=False,
+            range=[0, img_height * scale_factor],
+            # the scaleanchor attribute ensures that the aspect ratio stays constant
+            scaleanchor="x",
+            fixedrange = True
+        )
+    
+        # Add image
+        fig.add_layout_image(
+            dict(
+                x=0,
+                sizex=img_width * scale_factor,
+                y=img_height * scale_factor,
+                sizey=img_height * scale_factor,
+                xref="x",
+                yref="y",
+                opacity=1.0,
+                layer="above",
+                sizing="stretch",
+                source=png)
+        )
+    
+        # Configure other layout
+        fig.update_layout(
+            width=img_width *scale_factor,
+            height=img_height *scale_factor,
+            margin={"l": 0, "r": 0, "t": 0, "b": 0},
+        )
+        st.plotly_chart(fig,config={"displayModeBar": False})
     image_png("./SupplierSpendAnalytics.png")
     # logo_path = "SupplierSpendAnalytics.png"
     # st.image(logo_path, width=100) 
