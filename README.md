@@ -5,8 +5,10 @@ snow app run
 ```
 
 For more information, please refer to the Snowflake Documentation on installing and using Snowflake CLI to create a Snowflake Native App.  
+[Documentation.](https://docs.snowflake.com/en/developer-guide/native-apps/tutorials/getting-started-tutorial#create-the-application-files)
+
 # Directory Structure
-## `/app`
+## `/app`git 
 This directory holds your Snowflake Native App files.
 
 ### `/app/README.md`
