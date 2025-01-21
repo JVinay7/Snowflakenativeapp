@@ -703,20 +703,7 @@ def display_spend_by_category(filters):
                 )
  
             with col2:
-                # Add a button beside the heading
-                # st.markdown(
-                #     """
-                #     <style>
-                #     .stButton > button {
-                #         margin-left: -20px; /* Adjust left margin */
-                #         margin-right: 0; 
-                #         width: 250px;       /* Adjust button width */
-                #         text-align: center; /* Center the text */
-                #     }
-                #     </style>
-                #     """,
-                #     unsafe_allow_html=True,
-                # )
+                
                 
                
                 if st.button("Filter by Category",use_container_width=True):
@@ -738,20 +725,8 @@ def display_spend_by_category(filters):
                 help="This view allows you to filter spend by the selected Level 1 category. It provides a more focused analysis of spend distribution across subcategories."
                 )
             with col2:
-                # Add a button beside the heading
-                # st.markdown(
-                #     """
-                #     <style>
-                #     .stButton > button {
-                #         margin-left: -20px; /* Adjust left margin */
-                #         margin-right: 0; 
-                #         width: 250px;       /* Adjust button width */
-                #         text-align: center; /* Center the text */
-                #     }
-                #     </style>
-                #     """,
-                #     unsafe_allow_html=True,
-                # )
+                
+                
                 
                 if st.button("Show All",use_container_width=True):
                     st.session_state.filter_view = False  # Switch back to full table view
@@ -804,7 +779,11 @@ def display_spend_by_category_diversity(filters):
     # SQL query to get Spend by Category
     base_query = build_query(filters)
     query = f"""
-    SELECT DISTINCT b.LEVEL_1, b.LEVEL_2, a.SUPPLIER_DIV_SUBTYPE, SUM(a.INV_LINE_AMT_USD) AS SPEND_AMOUNT
+    SELECT DISTINCT 
+        COALESCE(b.LEVEL_1, 'Not Specified') AS LEVEL_1, 
+        COALESCE(b.LEVEL_2, 'Not Specified') AS LEVEL_2, 
+        COALESCE(a.SUPPLIER_DIV_SUBTYPE, 'Not Specified') AS SUPPLIER_DIV_SUBTYPE, 
+        SUM(a.INV_LINE_AMT_USD) AS SPEND_AMOUNT
     FROM ({base_query}) a
     LEFT JOIN {taxonomy_view} b ON b.LEVEL_4 = a.SPEND_CATEGORY
     WHERE a.INV_LINE_AMT_USD::string <> '' AND b.LEVEL_1 IS NOT NULL
@@ -814,7 +793,8 @@ def display_spend_by_category_diversity(filters):
     try:
         # Execute the query and fetch the data
         chart_data = get_session().sql(query).toPandas()
- 
+        
+      
         # Format the SPEND_AMOUNT as a numeric value in millions
         chart_data["SPEND_AMOUNT"] = chart_data["SPEND_AMOUNT"].astype(float) / 1_000_000
         chart_data["SPEND_AMOUNT"] = chart_data["SPEND_AMOUNT"].round(3)

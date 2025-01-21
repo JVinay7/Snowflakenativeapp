@@ -15,50 +15,7 @@ taxonomy_view = table_mappings["dim_taxonomy_code_view"]
 
 col1, col2 = st.columns([1, 1])  # Adjust the width ratio as needed
 
-# Display the logo in the first column
-# with row1:
-#     logo_path = "./assets/app_logo.svg"
-#     # Load the SVG file content
-#     with open('./assets/app_logo.svg', 'r') as file:
-#         svg_code = file.read()
 
-#     # Display the SVG using Markdown
-#     st.markdown(f"<div>{svg_code}</div>", unsafe_allow_html=True)
-
-# row1, row3 = st.columns([1, 5])
-# with row1:
-#     logo_path = "./assets/app_logo.svg"
-#     # Load the SVG file content
-#     with open(logo_path, 'r') as file:
-#         svg_code = file.read()
-
-#     # Display the SVG with inline CSS styling
-#     st.markdown(
-#         f"<div style='width: 100px; height: 100px;'>{svg_code}</div>", 
-#         unsafe_allow_html=True
-#     )
-# # Display the main title in the second column
-# with row3:
-#     st.markdown(
-#         """
-#         <h1 style='text-align: left;'>
-#             <span style='color:#1D4077;'>Categories</span>
-#         </h1>
-#         """, 
-#         unsafe_allow_html=True
-#     )
-
-# col1 = st.container()
-# # Display the main title in the second column
-# with col1:
-#     st.markdown(
-#         """
-#         <h1 style='text-align: left;'>
-#             <span style='color:#1D4077;'>Categories</span>
-#         </h1>
-#         """, 
-#         unsafe_allow_html=True
-#     )
 
 
 

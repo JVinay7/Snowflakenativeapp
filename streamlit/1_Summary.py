@@ -59,8 +59,13 @@ with page1:
         if previous_total_spend is not None:
             current_value = parse_metric_value(total_spend)
             previous_value = parse_metric_value(previous_total_spend)
-            delta_spend = get_percentage_difference(current_value, previous_value)
-            delta_spend_display = f"vs. PY YTD: {delta_spend:.2f}%" if delta_spend is not None else "vs. PY YTD: 0.0"
+            if previous_value == 0:
+                delta_spend_display = "vs. PY YTD: N/A"  # Handle edge case for zero previous value
+            else:
+                delta_spend = get_percentage_difference(current_value, previous_value)
+                delta_spend_display = f"vs. PY YTD: {delta_spend:+.2f}%"
+            # delta_spend = get_percentage_difference(current_value, previous_value)
+            # delta_spend_display = f"vs. PY YTD: {delta_spend:.2f}%" if delta_spend is not None else "vs. PY YTD: 0.0"
             st.metric(label="Total Spend",
                       help = "Shows the total amount spent based on your selected filters. It makes sure the spend data is valid and then displays the total", 
                       value=total_spend, delta=delta_spend_display)
@@ -132,6 +137,7 @@ with page1:
     with col9:
         if previous_total_suppliers is not None:
             delta_suppliers = get_percentage_difference(total_suppliers, previous_total_suppliers)
+           
             delta_suppliers_display = f"PY YTD: {delta_suppliers:.2f}%" if delta_suppliers is not None else "PY YTD: 0.0"
             st.metric(label="No. of Suppliers",
                       help="Counts how many suppliers you have based on the filters you choose. It shows the number of suppliers that have valid transactions.",

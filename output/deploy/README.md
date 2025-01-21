@@ -1,37 +1,36 @@
-## Run the app
-Create or update an application package in your Snowflake account, upload application artifacts to a stage in the application package, and create or update an application object in the same account based on the uploaded artifacts.
-```
-snow app run
-```
+## Supplier Spend Analytics
 
-For more information, please refer to the Snowflake Documentation on installing and using Snowflake CLI to create a Snowflake Native App.  
-# Directory Structure
-## `/app`
-This directory holds your Snowflake Native App files.
+**Introducing Supplier Spend Analytics** -  is a powerful and intuitive application designed to help businesses optimize their supplier-related expenditures. By providing advanced insights into supplier diversity, spend metrics, and supplier performance, this tool empowers organizations to reduce costs, support diverse suppliers, and achieve greater operational efficiency.
 
-### `/app/README.md`
-Exposed to the account installing the application with details on what it does and how to use it.
+## Key Features / Benefits 
 
-### `/app/manifest.yml`
-Defines properties required by the application package. Find more details at the [Manifest Documentation.](https://docs.snowflake.com/en/developer-guide/native-apps/creating-manifest)
+### Comprehensive Spend Analysis
+Supplier Spend Analytics enables businesses to analyze total spend across all suppliers in real time. It highlights high-spend areas, providing actionable insights to renegotiate contracts, consolidate suppliers, or switch to cost-effective alternatives.
 
-### `/app/setup_script.sql`
-Contains SQL statements that are run when a consumer installs or upgrades a Snowflake Native App in their account.
+### Diversity Spend Tracking
+The app provides a detailed breakdown of spending with diverse suppliers, including minority-owned, women-owned, and veteran-owned businesses. It calculates the percentage of total spend allocated to diversity initiatives, helping organizations meet their inclusivity goals while identifying new opportunities for collaboration.
 
-## `/scripts`
-You can add any additional scripts such as `.sql` and `.jinja` files here. One common use case for such a script is to add shared content from external databases to your application package. This allows you to refer to the external database in the setup script that runs when a Snowflake Native App is installed.
-_Note: As of now, `snow app init` does not render these jinja templates for you into the required files, if you decide to use them. You will have to manually render them for now._
+### Supplier Performance Metrics
+Track supplier performance across multiple dimensions, such as spend efficiency, delivery timeliness, and quality of service. This feature helps organizations identify high-performing suppliers and make data-driven decisions to reduce inefficiencies.
+
+### Actionable Recommendations for Cost Optimization
+Supplier Spend Analytics identifies opportunities for cost savings, such as underperforming suppliers, unutilized contracts, or opportunities to consolidate procurement. With this tool, organizations can proactively manage their spending and avoid unnecessary expenses.
+
+### Dynamic Filtering and Visualization
+The app includes interactive dashboards and filters that allow users to analyze supplier spend data by region, category, or diversity subtype. Visualizations make complex data easier to understand and support quick, data-driven decisions.
 
 
-## `/src`
-This directory contains code organization by functionality, such as one distinct module for Streamlit related code, another module for loading data from stage functionality,a and another modules for stored procedures which generates recommendations. template. 
+## Business Needs
 
-## `snowflake.yml.jinja`
-While this file exists as a Jinja template, it is the only file that is automatically rendered as a `snowflake.yml` file by the `snow app init` command, as described in the [README.md](../README.md). Snowflake CLI uses the `snowflake.yml` file  to discover your project's code and interact with Snowflake using all relevant privileges and grants. 
+**Cost Optimization**: Reduce unnecessary supplier spend by identifying high-cost areas and underperforming suppliers. Consolidate contracts and renegotiate terms to achieve significant savings.
 
-For more information, please refer to the Snowflake Documentation on installing and using Snowflake CLI to create a Snowflake Native App. 
+**Supplier Diversity**: Support inclusive procurement practices by tracking spend with diverse suppliers and identifying opportunities to collaborate with minority-owned, women-owned, and veteran-owned businesses.
 
-## Adding a snowflake.local.yml file
-Although your project directory must have a `snowflake.yml` file, an individual developer can choose to customize the behavior of Snowflake CLI by providing local overrides to the `snowflake.yml` file, such as a new role to test out your own application package. This is where you can use the `snowflake.local.yml` file, which is not a version-controlled file.
+**Enhanced Decision-Making**: Provide procurement teams with real-time insights and analytics, enabling them to make informed decisions based on accurate supplier data.
 
-For more information, please refer to the Snowflake Documentation on installing and using Snowflake CLI to create a Snowflake Native App. 
+**Increased Efficiency**: Save time and resources by automating supplier spend analysis and generating actionable insights, reducing manual effort and ensuring a focus on strategic initiatives.
+
+
+-----------------
+**Supplier Spend Analytics** is your ultimate solution for reducing costs, promoting diversity, and optimizing supplier performance. With its intuitive interface and actionable insights, businesses can achieve greater financial control and operational efficiency.
+
